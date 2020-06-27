@@ -1,0 +1,21 @@
+# Specify Hostname of server running shell script in $hostname
+# Specify IP address of server in $ip
+# Specify Job Name in $name
+# Specify successful job as 1 and failed job as 0 in job_status
+# Specify additional information that you may require in $jobinfo
+# [Optional] Attach files in job_log_file
+# View sample shell script in our repository to understand it better
+# At the end specify URL of web service - postjob.php
+
+curl -i \
+-H "Content-Type: multipart/form-data" \
+-H "Content-Type: application/json" \
+-X POST \
+-F "host_name=$hostname" \
+-F "host_ip=$ip" \
+-F "job_name=$name" \
+-F "job_start_date=$start_time" \
+-F "job_end_date=$end_time" \
+-F "job_status=1" \
+-F "job_info=$jobinfo" \
+-F "job_log_file=@jobresults.out" "http://localhost:8082/cronjob/Cron-Job-Monitoring/api/postjob.php"
