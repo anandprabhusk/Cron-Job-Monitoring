@@ -1,6 +1,6 @@
 ***Cron Job Monitoring Tool*** is a web based tool to centrally monitor all your cron jobs running in several servers in one web console.
 
-https://github.com/anandprabhusk/Cron-Job-Monitoring/blob/master/guide/CronJobMonitoringTool.png
+![How CMJT works?](https://github.com/anandprabhusk/Cron-Job-Monitoring/blob/master/guide/CronJobMonitoringTool.png)
 
 ***Step 1***: In your mysql db, create a table named "cronjob" using guide\cronjob.sql script
 
@@ -11,7 +11,7 @@ https://github.com/anandprabhusk/Cron-Job-Monitoring/blob/master/guide/CronJobMo
 ***Step 4***: Before proceeding for next step, verify web service using postman. A sample postman result is given - guide\sample-postman.png.
 You must receive Status Code: 201. Data is successfully stored.
 
-https://github.com/anandprabhusk/Cron-Job-Monitoring/blob/master/guide/sample-postman.PNG
+![Sample Postman results](https://github.com/anandprabhusk/Cron-Job-Monitoring/blob/master/guide/sample-postman.PNG)
 
 ***Step 5***: Add script to guide\shell-curl-script.txt to your script file. A sample is given - sample-shellscript.txt
 You must assign values to variables in the shell-curl-script.txt
