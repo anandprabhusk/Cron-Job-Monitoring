@@ -1,0 +1,74 @@
+# Script to delete files older 90 days in the folder path /var/cisco/voicelogs
+
+#######################################################################
+# CJMT SCRIPT - FIRST PORTION STARTS HERE
+# Specify Hostname of server running shell script in "hostname" variable
+# Specify IP address of server in "ip" variable
+# Specify Job Name in "name" variable
+# Capture Start Time of Job in "start_time" variable
+
+hostname=$HOSTNAME
+ip="10.10.10.10"
+name="Delete 90 days old voice logs"
+start_time=$(date '+%Y-%m-%d %H:%M:%S');
+
+# CJMT SCRIPT - FIRST PORTION ENDS HERE
+#######################################################################
+
+
+fpath=/var/cisco/voicelogs
+if [[ $(find $fpath -mindepth 1 -type d -mtime +90) ]]
+then
+find $fpath -mindepth 1 -type d -mtime +90 -exec ls -ltrh {} \; > jobresults.out
+find $fpath -mindepth 1 -type d -mtime +90 -exec rm -rf {} \;
+filescount="Cisco $(cat jobresults.out | wc -l) folders found and deleted"
+
+#######################################################################
+# CJMT SCRIPT - IF STATEMENT PORTION STARTS HERE
+# Capture End Time of Job in "end_time" variable
+# Specify successful job as 1 in "job_status" variable
+# Specify additional information that you may require in "jobinfo" variable
+# [Optional] Attach files in "job_log_file" variable
+# At the end specify URL of web service - postjob.php
+
+end_time=$(date '+%Y-%m-%d %H:%M:%S');
+
+curl -i \
+-H "Content-Type: multipart/form-data" \
+-H "Content-Type: application/json" \
+-X POST \
+-F "host_name=$hostname" \
+-F "host_ip=$ip" \
+-F "job_name=$name" \
+-F "job_start_date=$start_time" \
+-F "job_end_date=$end_time" \
+-F "job_status=1" \
+-F "job_info=$filescount" \
+-F "job_log_file=@jobresults.out" "http://localhost:8082/cronjob/Cron-Job-Monitoring/api/postjob.php"
+
+# CJMT SCRIPT - IF STATEMENT PORTION ENDS HERE
+#######################################################################
+
+else
+
+#######################################################################
+# CJMT SCRIPT - ELSE STATEMENT PORTION STARTS HERE
+# Specify failed job as 2 in "job_status" variable
+
+end_time=$(date '+%Y-%m-%d %H:%M:%S');
+
+curl -i \
+-H "Content-Type: multipart/form-data" \
+-H "Content-Type: application/json" \
+-X POST \
+-F "host_name=$hostname" \
+-F "host_ip=$ip" \
+-F "job_name=$name" \
+-F "job_start_date=$start_time" \
+-F "job_end_date=$end_time" \
+-F "job_status=2" \
+-F "job_info=No-folders-found" \
+"http://localhost:8082/cronjob/Cron-Job-Monitoring/api/postjob.php"
+fi
+# CJMT SCRIPT - ELSE STATEMENT PORTION ENDS HERE
+#######################################################################

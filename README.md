@@ -13,7 +13,6 @@ You must receive Status Code: 201. Data is successfully stored.
 
 ![Sample Postman results](https://github.com/anandprabhusk/Cron-Job-Monitoring/blob/master/guide/sample-postman.PNG)
 
-***Step 5***: Add script to guide\shell-curl-script.txt to your script file. A sample is given - sample-shellscript.txt
-You must assign values to variables in the shell-curl-script.txt
+***Step 5***: Add this script guide\shell-curl-script.txt to your script file. A sample is given - sample-shellscript.txt
 
 ***Step 6***: Execute shell script and verify if values are posted to database
